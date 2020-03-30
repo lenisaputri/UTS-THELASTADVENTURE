@@ -47,6 +47,6 @@ TagManager:
   - name: Foreground
     uniqueID: 2698253931
     locked: 0
-  - name: Popup
+  - name: Entity
     uniqueID: 2004691493
     locked: 0
