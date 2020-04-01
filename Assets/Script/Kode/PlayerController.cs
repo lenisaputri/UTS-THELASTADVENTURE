@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     //Inspector variables
     [SerializeField]private LayerMask ground;
     [SerializeField] private float speed = 3f;
-    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpForce = 5f;
 
     private void Start()
     {
