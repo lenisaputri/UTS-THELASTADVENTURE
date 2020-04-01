@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
 
+    public int coin = 0;
+
     //FSM
     private enum State { idle, running, jumping, falling}
     private State state = State.idle;
@@ -30,6 +32,15 @@ public class PlayerController : MonoBehaviour
         Movement();
         AnimationState();
         anim.SetInteger("state",(int)state);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Collectable")
+        {
+            Destroy(collision.gameObject);
+            coin += 1;
+        }
     }
 
     private void Movement()
