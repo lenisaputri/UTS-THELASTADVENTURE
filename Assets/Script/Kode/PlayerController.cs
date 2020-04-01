@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,16 +10,18 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
 
-    public int coin = 0;
-
     //FSM
-    private enum State { idle, running, jumping, falling}
+    private enum State { idle, running, jumping, falling, hurt}
     private State state = State.idle;
     
     //Inspector variables
-    [SerializeField]private LayerMask ground;
+    [SerializeField] private LayerMask ground;
     [SerializeField] private float speed = 3f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private int coin = 0;
+    [SerializeField] private Text coinText;
+    [SerializeField] private float hurtForce = 5f;
+
 
     private void Start()
     {
@@ -29,7 +32,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Movement();
+        if(state != State.hurt)
+        {
+            Movement();
+        }
+
         AnimationState();
         anim.SetInteger("state",(int)state);
     }
@@ -40,6 +47,34 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             coin += 1;
+            coinText.text = coin.ToString();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+            if(state == State.falling)
+            {
+                enemy.JumpedOn();
+
+                Jump();
+            }
+            else
+            {
+                state = State.hurt;
+                if (other.gameObject.transform.position.x > transform.position.x)
+                {
+                    rb.velocity = new Vector2(-hurtForce, rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(hurtForce, rb.velocity.y);
+                }
+            }
         }
     }
 
@@ -64,9 +99,14 @@ public class PlayerController : MonoBehaviour
         //Jumping
         if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            state = State.jumping;
+            Jump();
         }
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        state = State.jumping;
     }
 
     private void AnimationState()
@@ -87,7 +127,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        else if(Mathf.Abs(rb.velocity.x) > 2f)
+        else if (state == State.hurt)
+        {
+            if(Mathf.Abs(rb.velocity.x) < .1f)
+            {
+                state = State.idle;
+            }
+        }
+
+        else if (Mathf.Abs(rb.velocity.x) > 2f)
         {
             state = State.running;
         }
