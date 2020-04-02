@@ -21,13 +21,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int coin = 0;
     [SerializeField] private Text coinText;
     [SerializeField] private float hurtForce = 5f;
-
+    [SerializeField] private AudioSource coinPicked;
+    [SerializeField] private AudioSource footstep;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        footstep = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.tag == "Collectable")
         {
+            coinPicked.Play();
             Destroy(collision.gameObject);
             coin += 1;
             coinText.text = coin.ToString();
@@ -143,5 +146,10 @@ public class PlayerController : MonoBehaviour
         {
             state = State.idle;
         }
+    }
+
+    private void Footstep()
+    {
+        footstep.Play();
     }
 }
