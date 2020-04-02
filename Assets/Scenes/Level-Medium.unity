@@ -564,15 +564,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fall
       objectReference: {fileID: 0}
+    - target: {fileID: 6635949010187766342, guid: 02eb7e27fcc2a7f4eb3639575b742e98,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -2.5263023
+      objectReference: {fileID: 0}
+    - target: {fileID: 6635949010187766342, guid: 02eb7e27fcc2a7f4eb3639575b742e98,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 117.69694
+      objectReference: {fileID: 0}
     - target: {fileID: 6635949010187766343, guid: 02eb7e27fcc2a7f4eb3639575b742e98,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.79
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6635949010187766343, guid: 02eb7e27fcc2a7f4eb3639575b742e98,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.14
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 6635949010187766343, guid: 02eb7e27fcc2a7f4eb3639575b742e98,
         type: 3}
