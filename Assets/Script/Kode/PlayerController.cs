@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     //FSM
     private enum State { idle, running, jumping, falling, hurt}
     private State state = State.idle;
-    
+
     //Inspector variables
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed = 3f;
@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource footstep;
     [SerializeField] private int health;
     [SerializeField] private Text healthAmount;
-
 
     private void Start()
     {
